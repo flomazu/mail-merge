@@ -1,0 +1,32 @@
+name: tests
+
+on: [push, pull_request]
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e ".[dev]"
+      - run: pytest -v
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t mail-merge .
+      - name: Dry run with the examples (expects exit code 1, the list has skipped rows)
+        run: |
+          set +e
+          docker run --rm -v "$PWD/examples:/data:ro" mail-merge \
+            --config config.yaml --output-dir /tmp/out --json
+          code=$?
+          echo "exit code: $code"
+          test "$code" -eq 1

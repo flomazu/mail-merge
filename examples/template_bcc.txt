@@ -1,0 +1,7 @@
+{greeting}
+
+unser Büro bleibt vom 23. Dezember bis 2. Januar geschlossen.
+In dringenden Fällen erreichen Sie uns unter notfall@example.com.
+
+Viele Grüße
+Ihr Team der Beispiel GmbH
