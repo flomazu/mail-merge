@@ -1,0 +1,9 @@
+{greeting}
+
+wir laden {Firma} herzlich zu unserem Kundentag am 12. März ein.
+
+Die Agenda finden Sie im Anhang. Bitte geben Sie uns bis zum 1. März Bescheid,
+ob Sie teilnehmen.
+
+Viele Grüße
+Ihr Team der Beispiel GmbH

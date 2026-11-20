@@ -1,0 +1,29 @@
+# Example config: bcc mode, CSV input, no attachment.
+# Relative paths are resolved against the folder of this file.
+
+input:
+  file: recipients.csv
+  header_row: 1
+  csv_delimiter: ";"
+  encoding: utf-8-sig
+
+columns:
+  email: E-Mail
+
+mail:
+  mode: bcc
+  subject: "Betriebsferien zum Jahreswechsel"
+  template: template_bcc.txt
+  greeting_fallback: "Sehr geehrte Damen und Herren,"
+  bcc_batch_size: 2
+
+smtp:
+  host: localhost
+  port: 1025
+  security: none
+  from_address: info@example.com
+  from_name: Beispiel GmbH
+  pause_seconds: 0.5
+
+output_dir: output_bcc
+send_log: output_bcc/send_log.csv
