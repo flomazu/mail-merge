@@ -32,16 +32,16 @@ def write_report(
     sheet.append(["Config", config_name])
     sheet.append(["Started", started.isoformat(timespec="seconds")])
     sheet.append([])
-    sheet.append(["Row", "Email", "Status", "Reason", "Subject"])
+    sheet.append(["Row", "Email", "Status", "Reason", "Greeting", "Subject"])
     for cell in sheet[5]:
         cell.font = bold
     sheet["A1"].font = bold
     sheet["B1"].font = bold
 
     for r in results:
-        sheet.append([r.row, r.email, r.status, r.reason, r.subject])
+        sheet.append([r.row, r.email, r.status, r.reason, r.greeting, r.subject])
 
-    for column, width in zip("ABCDE", (6, 34, 14, 40, 60)):
+    for column, width in zip("ABCDEF", (6, 34, 14, 40, 34, 60)):
         sheet.column_dimensions[column].width = width
     sheet.freeze_panes = "A6"
 

@@ -26,8 +26,13 @@ def test_dry_run_report(workdir, cli):
     sheet = load_workbook(summary["report"]).active
     assert sheet["B1"].value == "DRY RUN (nothing was sent)"
     rows = {r[0]: r for r in sheet.iter_rows(min_row=6, values_only=True)}
-    assert rows[2][2:] == ("would_send", None, "Einladung zum Kundentag für Schmidt Logistik GmbH")
-    assert rows[5][2:4] == ("skipped", "invalid email format")
+    assert sheet["E5"].value == "Greeting"
+    assert rows[2][2:] == (
+        "would_send", None, "Guten Tag Anna Schmidt,",
+        "Einladung zum Kundentag für Schmidt Logistik GmbH",
+    )
+    assert rows[4][4] == "Sehr geehrte Damen und Herren,"  # no name -> fallback
+    assert rows[5][2:5] == ("skipped", "invalid email format", None)
     assert len(rows) == 7
 
 

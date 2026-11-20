@@ -47,9 +47,10 @@ def compose_individual(
     drafts = []
     for row in rows:
         values = dict(row.values)
-        values[GREETING] = build_greeting(
+        row.greeting = build_greeting(
             config.mail.greeting, config.mail.greeting_fallback, row.values
         )
+        values[GREETING] = row.greeting
         row.subject = fill(subject, values)
         message = _message(config, row.subject, fill(body, values), attachment)
         message["To"] = row.email
@@ -71,6 +72,7 @@ def compose_bcc(
     for start in range(0, len(rows), size):
         batch = rows[start : start + size]
         for row in batch:
+            row.greeting = config.mail.greeting_fallback
             row.subject = final_subject
         message = _message(config, final_subject, final_body, attachment)
         message["To"] = visible_to

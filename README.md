@@ -104,7 +104,7 @@ Input files are only read, never modified.
 | Recipient list (`.xlsx` / `.csv`) | input | one column with email addresses, any others as placeholders |
 | Template (`.txt` / `.docx`) | input | body text with placeholders; from `.docx` only the plain text |
 | Attachment | input, optional | one file attached to every email |
-| `report_<timestamp>_dryrun.xlsx` / `_sent.xlsx` | every run, new file | every row with status, reason and final subject; mode stated at the top |
+| `report_<timestamp>_dryrun.xlsx` / `_sent.xlsx` | every run, new file | every row with status, reason, the greeting used and the final subject; mode stated at the top |
 | `preview.eml` | dry run, overwritten | the first email; opens in Outlook or Thunderbird like a received mail |
 | Send log (`.csv`) | `--execute`, appended | address and time of every successfully sent email; the tool's memory across runs |
 | JSON summary | `--json` | counts and file paths, printed to stdout |

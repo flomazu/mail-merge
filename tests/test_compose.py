@@ -29,6 +29,8 @@ def test_individual(workdir):
     assert second.get_body().get_content().startswith("Sehr geehrte Damen und Herren,")
     assert [a.get_filename() for a in first.iter_attachments()] == ["agenda.pdf"]
     assert recipients[0].subject == "Einladung zum Kundentag für Firma A"
+    assert recipients[0].greeting == "Guten Tag Anna Schmidt,"
+    assert recipients[1].greeting == "Sehr geehrte Damen und Herren,"
 
 
 def test_bcc_batches(workdir):

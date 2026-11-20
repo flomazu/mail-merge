@@ -50,7 +50,8 @@ read without an extra dependency). Configurable pause between emails.
 ## Dry run and execution
 - Default: dry run. Nothing is sent.
   - Terminal: short summary (counts, first few recipients, skipped rows).
-  - Report: every recipient with the final subject (placeholders filled in).
+  - Report: every recipient with the greeting used and the final subject
+    (placeholders filled in).
     File name ends in `_dryrun` (or `_sent` with `--execute`); the mode is also
     stated at the top of the sheet.
   - Preview: the first email as an .eml file in the output folder, which opens

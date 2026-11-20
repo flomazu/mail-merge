@@ -25,6 +25,7 @@ class RowResult:
     values: dict[str, str]
     status: str
     reason: str = ""
+    greeting: str = ""
     subject: str = ""
 
 
