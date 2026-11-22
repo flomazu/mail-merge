@@ -1,4 +1,5 @@
 {
+  "schema_version": 1,
   "config": "examples/config.yaml",
   "mode": "dry_run",
   "rows": 7,

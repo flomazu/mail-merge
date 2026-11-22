@@ -67,8 +67,9 @@ pytest
 | `--mode individual\|bcc` | override `mail.mode` |
 | `--env-file PATH` | file with SMTP credentials (default `.env`) |
 
-Exit codes: `0` success, `1` completed but rows were skipped or failed,
+Exit codes: `0` success, `1` completed with notes (rows were skipped or failed),
 `2` aborted (config or technical error, e.g. SMTP server unreachable).
+See [Using it from scripts and n8n](#using-it-from-scripts-and-n8n).
 
 ## Config
 
@@ -117,12 +118,47 @@ send log, not an error), `failed` (send error or refused by the server).
 server accepted it. A re-run skips those addresses and retries only the ones
 that failed. An interrupted run can simply be started again.
 
+### Using it from scripts and n8n
+
+The tool never asks questions, so it can run unattended. A calling script or
+workflow should check the exit code and read the JSON summary.
+
+**Exit codes**
+
+| Code | Meaning | Treat as |
+|---|---|---|
+| `0` | completed, every row was sent (or would be sent) | success |
+| `1` | completed with notes: some rows were skipped or failed, see the report | success with warnings, **not** a failure |
+| `2` | aborted (config or technical error), see `error` in the JSON | failure |
+
+Orchestrators such as n8n treat every non-zero exit code as an error by
+default. Allow exit code 1 explicitly.
+
+**JSON summary.** With `--json` the summary is printed to stdout; log lines go
+to stderr, so stdout contains only JSON. The current fields
+(`schema_version` is increased when they change in a way that breaks readers):
+
+| Field | Content |
+|---|---|
+| `schema_version` | `1` |
+| `status` | `completed` or `aborted` |
+| `exit_code` | as above |
+| `mode` | `dry_run` or `execute` |
+| `send_mode` | `individual` or `bcc` |
+| `config` | config name (file name without extension) |
+| `rows` | data rows read from the list |
+| `emails` | emails built (in bcc mode: batches) |
+| `counts` | `would_send`, `sent`, `skipped`, `already_sent`, `failed` |
+| `report`, `preview`, `send_log` | file paths (`preview` is `null` with `--execute`) |
+| `error` | only when `status` is `aborted`; then only `schema_version`, `status`, `error` and `exit_code` are present |
+
 ## Variants
 
 ### Docker
 
-Docker is optional; it runs the same CLI without installing Python. The image
-contains only the tool. Config, list and output come from a mounted folder,
+Docker is optional; it runs the same CLI without installing Python on your
+machine. The image brings its own Python (based on `python:3.14-slim`) plus
+the tool, nothing else. Config, list and output come from a mounted folder,
 credentials from environment variables at runtime.
 
 ```bash

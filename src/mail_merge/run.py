@@ -23,6 +23,8 @@ WOULD_SEND = "would_send"
 SENT = "sent"
 FAILED = "failed"
 PREVIEW_NAME = "preview.eml"
+# Increase when the JSON summary changes in a way that breaks readers.
+SCHEMA_VERSION = 1
 SHOW_FIRST = 5
 
 
@@ -69,6 +71,7 @@ def run(config: Config, execute: bool = False, mailer: Mailer | None = None) -> 
         log.info("Preview of the first email: %s", preview)
 
     summary = {
+        "schema_version": SCHEMA_VERSION,
         "status": "completed",
         "mode": "execute" if execute else "dry_run",
         "send_mode": config.mail.mode,

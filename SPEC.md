@@ -71,6 +71,9 @@ All files go to the configured output folder (`output_dir`, overridable with
 `--output-dir`). Report (.xlsx, timestamped: sent / skipped + reason), send log,
 JSON summary with `--json`, exit codes as defined in CLAUDE.md. Exit code 1 if
 any row was skipped by the pre-check or failed to send; `already_sent` is not an error.
+Exit code 1 means "completed with notes", not failure; the README says so for
+callers such as n8n. The JSON summary carries `"schema_version": 1`, increased
+on changes that break readers; the README lists its fields.
 
 ## Runtime
 Python 3.11 or newer for pip installs. The Docker image uses Python 3.14.

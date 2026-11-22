@@ -16,7 +16,7 @@ from pathlib import Path
 from mail_merge import __version__
 from mail_merge.adapters.smtp import SmtpMailer
 from mail_merge.config import MODES, ConfigError, load_config
-from mail_merge.run import run
+from mail_merge.run import SCHEMA_VERSION, run
 
 log = logging.getLogger("mail_merge")
 
@@ -40,14 +40,18 @@ def main(argv: list[str] | None = None) -> int:
         summary, code = result.summary, result.exit_code
     except ConfigError as exc:
         log.error("Aborted: %s", exc)
-        summary, code = {"status": "aborted", "error": str(exc), "exit_code": 2}, 2
+        summary, code = _aborted(str(exc)), 2
     except Exception as exc:  # technical errors, e.g. SMTP server unreachable
         log.error("Aborted (technical error): %s: %s", type(exc).__name__, exc)
-        summary, code = {"status": "aborted", "error": str(exc), "exit_code": 2}, 2
+        summary, code = _aborted(str(exc)), 2
 
     if args.json:
         print(json.dumps(summary, ensure_ascii=False, indent=2))
     return code
+
+
+def _aborted(error: str) -> dict:
+    return {"schema_version": SCHEMA_VERSION, "status": "aborted", "error": error, "exit_code": 2}
 
 
 def _parser() -> argparse.ArgumentParser:

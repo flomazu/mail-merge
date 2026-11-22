@@ -13,7 +13,7 @@ def test_dry_run_matches_expected_summary(workdir, cli):
     code, summary = cli("--config", str(workdir / "config.yaml"))
 
     expected = json.loads((EXAMPLES / "expected" / "summary.json").read_text(encoding="utf-8"))
-    for key in ("mode", "rows", "emails", "counts", "exit_code"):
+    for key in ("schema_version", "mode", "rows", "emails", "counts", "exit_code"):
         assert summary[key] == expected[key], key
     assert code == 1  # the example list contains rows that are skipped
     assert not (workdir / "output" / "send_log.csv").exists()
@@ -92,3 +92,4 @@ def test_missing_config_exits_two(cli, tmp_path):
     code, summary = cli("--config", str(tmp_path / "missing.yaml"))
     assert code == 2
     assert summary["status"] == "aborted"
+    assert summary["schema_version"] == 1
