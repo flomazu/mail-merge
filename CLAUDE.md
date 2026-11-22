@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-Small, standalone automation building blocks for Excel-heavy business processes.
+Small, standalone automation building blocks for business processes, often built
+around Excel and Microsoft 365.
 Each repo is one building block. Blocks can be chained (e.g. via n8n or a script),
 but never depend on each other.
 

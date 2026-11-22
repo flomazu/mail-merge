@@ -221,3 +221,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# mail-merge run output
+output/
+output_bcc/
+
+# Office lock files (file currently open in Excel/Word)
+~$*

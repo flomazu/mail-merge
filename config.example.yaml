@@ -1,0 +1,37 @@
+# mail-merge config. One file per mailing type, reused across runs.
+# Relative paths are resolved against the folder that contains this file.
+# Secrets (SMTP_USER, SMTP_PASSWORD) never go here; use environment variables or .env.
+
+input:
+  file: recipients.xlsx        # .xlsx or .csv (override: --input)
+  sheet: Recipients            # .xlsx only; default: first sheet
+  header_row: 1                # row with the column names
+  csv_delimiter: ";"           # .csv only; default ";" (German Excel export)
+  encoding: utf-8-sig          # .csv only; e.g. cp1252 for older Windows exports
+
+columns:
+  email: E-Mail                # column with the email addresses (required)
+
+mail:
+  mode: individual             # individual | bcc (override: --mode)
+  subject: "Einladung zum Kundentag für {Firma}"
+  template: template.txt       # .txt or .docx (plain text only)
+  # Greeting pattern, inserted where the template says {greeting}.
+  # If a value used here is empty, greeting_fallback is used instead.
+  greeting: "Guten Tag {Name},"
+  greeting_fallback: "Sehr geehrte Damen und Herren,"
+  attachment: agenda.pdf       # optional, one file attached to every email
+  # bcc mode only:
+  bcc_to: null                 # visible To address; default: smtp.from_address
+  bcc_batch_size: 50           # max recipients per email
+
+smtp:
+  host: smtp.example.com
+  port: 587
+  security: starttls           # starttls (usually port 587) | ssl (465) | none (local tests only)
+  from_address: info@example.com
+  from_name: Example GmbH
+  pause_seconds: 1             # pause between emails
+
+output_dir: output             # report and preview (override: --output-dir)
+send_log: output/send_log.csv  # memory across runs: who already got this mailing

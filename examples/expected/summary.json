@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "config": "examples/config.yaml",
+  "mode": "dry_run",
+  "rows": 7,
+  "emails": 4,
+  "counts": {
+    "would_send": 4,
+    "sent": 0,
+    "skipped": 3,
+    "already_sent": 0,
+    "failed": 0
+  },
+  "exit_code": 1
+}
