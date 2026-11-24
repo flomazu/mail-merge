@@ -15,7 +15,7 @@ def test_dry_run_matches_expected_summary(workdir, cli):
     expected = json.loads((EXAMPLES / "expected" / "summary.json").read_text(encoding="utf-8"))
     for key in ("schema_version", "mode", "rows", "emails", "counts", "exit_code"):
         assert summary[key] == expected[key], key
-    assert code == 1  # the example list contains rows that are skipped
+    assert code == 0  # CI DEMO: deliberately wrong, the example list has skipped rows
     assert not (workdir / "output" / "send_log.csv").exists()
 
 
