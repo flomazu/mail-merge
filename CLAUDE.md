@@ -71,7 +71,8 @@ variants/             # optional: non-Python variants (e.g. power-automate/)
 - This repo is MIT-licensed.
 
 ## Tests
-- pytest, using the files in examples/. Tests run in GitHub Actions on every push.
+- pytest, using the files in examples/. Tests run in GitHub Actions on every pull request and on every
+  push to main.
 
 ## README (English)
 Problem → Before/after (time saved) → Quickstart (as few commands as needed) → Config →
