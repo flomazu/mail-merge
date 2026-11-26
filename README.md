@@ -195,6 +195,9 @@ Notes:
 - Microsoft Graph / Outlook adapter
 - Personalised attachments per recipient
 - Greeting with a salutation column ("Sehr geehrter Herr Müller")
+- A `{signature}` placeholder filled from a new `mail.signature` config value, so
+  the closing line is set per mailing instead of being written into each template
+  (kept separate from `smtp.from_name`, which belongs to the technical setup)
 - GUI, or generating the config from a template
 - Scheduling, hosting and triggering via n8n
 - Publishing on PyPI
